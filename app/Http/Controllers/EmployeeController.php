@@ -16,7 +16,7 @@ class EmployeeController extends Controller
     {
         $employees = Employee::paginate(10);
 
-        return view('employee.index', compact('employees'));
+        return view('pages.employee.index', compact('employees'));
     }
 
     /**
@@ -26,7 +26,7 @@ class EmployeeController extends Controller
     {
         $companies = Company::all();
 
-        return view('employee.create', compact('companies'));
+        return view('pages.employee.create', compact('companies'));
     }
 
     /**
@@ -58,7 +58,7 @@ class EmployeeController extends Controller
 
         $companies = Company::all();
 
-        return view('employee.edit', compact('employee', 'companies'));
+        return view('pages.employee.edit', compact('employee', 'companies'));
     }
 
     /**

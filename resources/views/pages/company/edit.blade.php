@@ -40,7 +40,14 @@
                             </div>
 
                             <div class="mt-4">
-                                <x-input-label for="logo" :value="__('Logo')" />
+                                @if ($company->logo)
+                                    <img src="{{ asset('storage/logos/' . $company->logo) }}"
+                                        class="img-placeholder w-30 h-30" alt="{{ $company->name }}">
+                                @else
+                                    <img src="{{ asset('images/default.png') }}" class="img-placeholder w-30 h-30"
+                                        alt="{{ $company->name }}">
+                                @endif
+                                <x-input-label for="logo" :value="__('Logo')" class="mt-4" />
                                 <x-file-input id="logo" name="logo" />
                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG,
                                     JPEG
@@ -60,9 +67,10 @@
                             <div class="flex items-center gap-4 mt-4">
                                 <x-primary-button>{{ __('Save') }}</x-primary-button>
 
-                                <x-secondary-button onclick="window.history.back()">
+                                <a href="{{ route('company.index') }}"
+                                    class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
                                     {{ __('Cancel') }}
-                                </x-secondary-button>
+                                </a>
                             </div>
                         </form>
                     </section>

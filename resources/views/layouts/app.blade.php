@@ -36,6 +36,8 @@
             {{ $slot }}
         </main>
     </div>
+
+    @include('layouts._script')
 </body>
 
 </html>

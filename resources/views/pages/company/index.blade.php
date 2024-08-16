@@ -26,6 +26,9 @@
                                         Company Name
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Email
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Website
                                     </th>
                                     <th scope="col" class="px-6 py-3">
@@ -50,6 +53,12 @@
                                             class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ $company->name }}
                                         </th>
+                                        <td class="px-6 py-4">
+                                            <a href="mailto:{{ $company->email }}"
+                                                class="text-blue-600 hover:underline">
+                                                {{ $company->email }}
+                                            </a>
+                                        </td>
                                         <td class="px-6 py-4">
                                             <a href="{{ $company->website }}" class="text-blue-600 hover:underline">
                                                 {{ $company->website }}

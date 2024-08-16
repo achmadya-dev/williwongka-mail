@@ -59,19 +59,3 @@
         </div>
     </div>
 @endif
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const closeButtons = document.querySelectorAll('[data-dismiss-target]');
-
-        closeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const target = document.querySelector(
-                    button.getAttribute('data-dismiss-target'));
-                if (target) {
-                    target.remove();
-                }
-            });
-        });
-    });
-</script>

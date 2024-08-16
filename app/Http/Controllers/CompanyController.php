@@ -15,7 +15,7 @@ class CompanyController extends Controller
     {
         $companies = Company::paginate(10);
 
-        return view('company.index', compact('companies'));
+        return view('pages.company.index', compact('companies'));
     }
 
     /**
@@ -23,7 +23,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('company.create');
+        return view('pages.company.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class CompanyController extends Controller
     {
         $company = $company->load('employees');
 
-        return view('company.edit', compact('company'));
+        return view('pages.company.edit', compact('company'));
     }
 
     /**
@@ -76,7 +76,7 @@ class CompanyController extends Controller
 
         if ($request->hasFile('logo')) {
             $oldLogo = public_path('storage/logos/' . $company->logo);
-            if (file_exists($oldLogo)) {
+            if (file_exists($oldLogo) && is_file($oldLogo)) {
                 unlink($oldLogo);
             }
             $logo = $request->file('logo');
@@ -87,7 +87,7 @@ class CompanyController extends Controller
         $company->update([
             'name' => $request->name,
             'email' => $request->email,
-            'logo' => $logoName,
+            'logo' => $logoName ?? $company->logo,
             'website' => $request->website,
         ]);
 
