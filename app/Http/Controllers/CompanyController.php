@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
+use DB;
 
 class CompanyController extends Controller
 {
@@ -33,18 +34,27 @@ class CompanyController extends Controller
     {
         $request->validated();
 
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
-            $logoName = date('Y-m-d-H-i-s') . '.' . $logo->getClientOriginalExtension();
-            $logo->storeAs('logos', $logoName, 'public');
-        }
+        try {
+            DB::beginTransaction();
 
-        $company = Company::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'logo' => $logoName,
-            'website' => $request->website,
-        ]);
+            $company = Company::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'website' => $request->website,
+            ]);
+
+            if ($request->hasFile('logo')) {
+                $logo = $request->file('logo');
+                $logoName = date('Y-m-d-H-i-s') . '.' . $logo->getClientOriginalExtension();
+                $logo->storeAs('logos', $logoName, 'public');
+                $company->update(['logo' => $logoName]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Company creation failed.');
+        }
 
         return redirect()->route('company.index')->with('success', 'Company created successfully.');
     }
@@ -74,22 +84,31 @@ class CompanyController extends Controller
     {
         $request->validated();
 
-        if ($request->hasFile('logo')) {
-            $oldLogo = public_path('storage/logos/' . $company->logo);
-            if (file_exists($oldLogo) && is_file($oldLogo)) {
-                unlink($oldLogo);
-            }
-            $logo = $request->file('logo');
-            $logoName = date('Y-m-d-H-i-s') . '.' . $logo->getClientOriginalExtension();
-            $logo->storeAs('logos', $logoName, 'public');
-        }
+        try {
+            DB::beginTransaction();
 
-        $company->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'logo' => $logoName ?? $company->logo,
-            'website' => $request->website,
-        ]);
+            $company->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'website' => $request->website,
+            ]);
+
+            if ($request->hasFile('logo')) {
+                $oldLogo = public_path('storage/logos/' . $company->logo);
+                if (file_exists($oldLogo) && is_file($oldLogo)) {
+                    unlink($oldLogo);
+                }
+                $logo = $request->file('logo');
+                $logoName = date('Y-m-d-H-i-s') . '.' . $logo->getClientOriginalExtension();
+                $logo->storeAs('logos', $logoName, 'public');
+                $company->update(['logo' => $logoName]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Company update failed.');
+        }
 
         return redirect()->route('company.index')->with('success', 'Company updated successfully.');
     }
@@ -99,13 +118,22 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        $logo = public_path('storage/logos/' . $company->logo);
+        try {
+            DB::beginTransaction();
 
-        if (file_exists($logo) && is_file($logo)) {
-            unlink($logo);
+            $logo = public_path('storage/logos/' . $company->logo);
+
+            if (file_exists($logo) && is_file($logo)) {
+                unlink($logo);
+            }
+
+            $company->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Company deletion failed.');
         }
-
-        $company->delete();
 
         return redirect()->route('company.index')->with('success', 'Company deleted successfully.');
     }

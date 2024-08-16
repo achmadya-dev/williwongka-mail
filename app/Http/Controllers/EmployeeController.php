@@ -6,6 +6,8 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Company;
 use App\Models\Employee;
+use App\Notifications\CreateEmployee;
+use DB;
 
 class EmployeeController extends Controller
 {
@@ -36,7 +38,20 @@ class EmployeeController extends Controller
     {
         $request->validated();
 
-        Employee::create($request->all());
+        try {
+            DB::beginTransaction();
+
+            $employee = Employee::create($request->all());
+
+            $company = Company::find($request->company_id);
+
+            $company->notify(new CreateEmployee($employee));
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Employee creation failed.');
+        }
 
         return redirect()->route('employee.index')->with('success', 'Employee created successfully.');
     }
