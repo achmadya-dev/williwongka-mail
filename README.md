@@ -1,66 +1,191 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Test
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Pre-requisites
 
-## About Laravel
+-   **Laravel**: Version 11.0
+-   **PHP**: Version 8.3
+-   **Composer**: Version 2.7.1
+-   **MySQL**: latest version
+-   **Node.js**: Version 18
+-   **NPM**: Version 9.2
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Optional
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   **Docker**: Version 27.1.1
+-   **Mailtrap**: For email testing
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
 
-## Learning Laravel
+1. Clone the repository:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    ```bash
+    git clone
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Install dependencies:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    composer install
+    npm install
+    ```
 
-## Laravel Sponsors
+3. Create a new `.env` file:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    cp .env.example .env
+    ```
 
-### Premium Partners
+4. Generate a new application key:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    php artisan key:generate
+    ```
 
-## Contributing
+5. Update the `.env` file with your database credentials:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.0
+    DB_PORT=3306
+    DB_DATABASE=your_database
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
 
-## Code of Conduct
+6. Run database migrations:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    php artisan migrate
+    ```
 
-## Security Vulnerabilities
+7. Create a symbolic link for the storage directory:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    php artisan storage:link
+    ```
 
-## License
+8. Start the Laravel development server:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    php artisan serve
+    ```
+
+## Using Docker
+
+1. Clone the repository:
+
+    ```bash
+    git clone
+    ```
+
+2. Build the Docker image:
+
+    ```bash
+    docker compose build app
+    ```
+
+3. Start the Docker containers:
+
+    ```bash
+    docker compose up -d
+    ```
+
+4. Install dependencies:
+
+    ```bash
+    docker compose exec app composer install
+    docker compose exec app npm install
+    ```
+
+5. Create a new `.env` file:
+
+    ```bash
+    docker compose exec app cp .env.example .env
+    ```
+
+6. Generate a new application key:
+
+    ```bash
+    docker compose exec app php artisan key:generate
+    ```
+
+7. Update the `.env` file with your database credentials:
+
+    ```bash
+    DB_CONNECTION=mysql
+    DB_HOST=simple-app-db
+    DB_PORT=3306
+    DB_DATABASE=your_database
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
+
+## Simple Apps Project Overview
+
+### 1. Basic Laravel Setup
+
+-   **Authentication**: Implement a login system for the administrator.
+
+### 2. Database Seeding
+
+-   **Initial User Creation**: Automatically create the first user with a predefined email using database seeds.
+
+### 3. CRUD Functionality
+
+-   **Entities to Manage**:
+    -   **Companies**: Manage company details.
+    -   **Employees**: Manage employee records.
+
+### 4. Companies Table Structure
+
+-   **Fields**:
+    -   **Name**: Required, 255 characters max.
+    -   **Email**: Optional, must be unique if provided, 100 characters max.
+    -   **Logo**: Optional, must have a minimum size of 10240 bytes and be a valid image file (jpg, jpeg, png).
+    -   **Website**: Optional, must be a valid URL if provided, 255 characters max.
+
+### 5. Employees Table Structure
+
+-   **Fields**:
+    -   **First Name**: Required, 255 characters max.
+    -   **Last Name**: Required, 255 characters max.
+    -   **Company**: Foreign key linked to the `Companies` table.
+    -   **Email**: Optional, must be unique if provided, 100 characters max.
+    -   **Phone**: Optional, 15 characters max.
+
+### 6. Database Migrations
+
+-   **Schema Creation**:
+    -   Create database schemas for `Companies` and `Employees` tables as outlined above.
+
+### 7. Company Logo Storage
+
+-   **Storage Location**: Store company logos in the `storage/app/public` directory.
+-   **Public Access**: Ensure logos are publicly accessible via the web.
+
+### 8. Laravel Resource Controllers
+
+-   **Controller Methods**: Implement default resource controller methods (`index`, `create`, `store`, `show`, `edit`, `update`, `destroy`) for managing `Companies` and `Employees`.
+
+### 9. Laravel Validation
+
+-   **Validation**: Utilize Laravel's form request classes to validate data input for `Companies` and `Employees`.
+
+### 10. Pagination
+
+-   **Default Pagination**: Implement pagination for `Companies` and `Employees` lists, displaying 10 records per page by default.
+
+### 11. Laravel `make:auth` Implementation
+
+-   **Authentication UI**: Use Laravel's default authentication system.
+-   **Registration**: Remove or disable the user registration functionality to restrict access.
+
+## Additional
+
+### 1. Email Notification
+
+-   **Employee Creation Alert**: Send an email notification to the respective company's admin whenever a new employee is added.
+
+### 2. Basic Unit Testing
+
+-   **Testing Framework**: Write and run basic unit tests using PHPUnit to ensure application functionality.

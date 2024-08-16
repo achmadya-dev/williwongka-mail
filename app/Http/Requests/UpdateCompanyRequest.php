@@ -24,8 +24,8 @@ class UpdateCompanyRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['nullable', 'email', 'max:255', 'unique:companies,email,' . $this->company->id],
-            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:10240'], // 100x100
+            'email' => ['nullable', 'email', 'max:100', 'unique:companies,email,' . $this->company->id],
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
             'website' => ['nullable', 'url', 'max:255'],
         ];
     }
