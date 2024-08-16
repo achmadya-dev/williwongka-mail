@@ -35,7 +35,7 @@
                             <div class="mt-4">
                                 <x-input-label for="email" :value="__('Email')" />
                                 <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
-                                    :value="old('email', $company->email)" required autocomplete="username" />
+                                    :value="old('email', $company->email)" autocomplete="username" />
                                 <x-input-error class="mt-2" :messages="$errors->get('email')" />
                             </div>
 
