@@ -20,13 +20,10 @@
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
+                                        Logo
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
                                         Company Name
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Address
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Phone Number
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         Website
@@ -41,14 +38,18 @@
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                            @if ($company->logo)
+                                                <img src="{{ asset('storage/logos/' . $company->logo) }}"
+                                                    class="w-10 h-10" alt="{{ $company->name }}">
+                                            @else
+                                                <img src="{{ asset('images/default.png') }}" class="w-10 h-10"
+                                                    alt="{{ $company->name }}">
+                                            @endif
+                                        </th>
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ $company->name }}
                                         </th>
-                                        <td class="px-6 py-4">
-                                            {{ $company->address }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $company->phone_number }}
-                                        </td>
                                         <td class="px-6 py-4">
                                             <a href="{{ $company->website }}" class="text-blue-600 hover:underline">
                                                 {{ $company->website }}

@@ -33,7 +33,18 @@ class CompanyController extends Controller
     {
         $request->validated();
 
-        $company = Company::create($request->all());
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $logoName = date('Y-m-d-H-i-s') . '.' . $logo->getClientOriginalExtension();
+            $logo->storeAs('logos', $logoName, 'public');
+        }
+
+        $company = Company::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'logo' => $logoName,
+            'website' => $request->website,
+        ]);
 
         return redirect()->route('company.index')->with('success', 'Company created successfully.');
     }
@@ -63,7 +74,22 @@ class CompanyController extends Controller
     {
         $request->validated();
 
-        $company->update($request->all());
+        if ($request->hasFile('logo')) {
+            $oldLogo = public_path('storage/logos/' . $company->logo);
+            if (file_exists($oldLogo)) {
+                unlink($oldLogo);
+            }
+            $logo = $request->file('logo');
+            $logoName = date('Y-m-d-H-i-s') . '.' . $logo->getClientOriginalExtension();
+            $logo->storeAs('logos', $logoName, 'public');
+        }
+
+        $company->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'logo' => $logoName,
+            'website' => $request->website,
+        ]);
 
         return redirect()->route('company.index')->with('success', 'Company updated successfully.');
     }
@@ -73,6 +99,12 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        $logo = public_path('storage/logos/' . $company->logo);
+
+        if (file_exists($logo) && is_file($logo)) {
+            unlink($logo);
+        }
+
         $company->delete();
 
         return redirect()->route('company.index')->with('success', 'Company deleted successfully.');
