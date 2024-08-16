@@ -42,9 +42,11 @@
                             <div class="mt-4">
                                 <x-input-label for="logo" :value="__('Logo')" />
                                 <x-file-input id="logo" name="logo" />
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG, JPG,
+                                    JPEG
                                     (MAX.
                                     100x100px).</p>
+                                <x-input-error class="mt-2" :messages="$errors->get('logo')" />
                             </div>
 
                             <div class="mt-4">

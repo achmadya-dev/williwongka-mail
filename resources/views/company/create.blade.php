@@ -35,8 +35,9 @@
                             <x-input-label for="file_input" :value="__('Logo')" />
                             <x-file-input id="logo" name="logo" />
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
-                                PNG, JPG (MAX. 100x100px).
+                                PNG, JPG, JPEG (MAX. 100x100px).
                             </p>
+                            <x-input-error :messages="$errors->get('logo')" class="mt-2" />
                         </div>
 
                         <!-- Website -->
