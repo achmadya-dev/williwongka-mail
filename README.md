@@ -5,7 +5,7 @@
 -   **Laravel**: Version 11.0
 -   **PHP**: Version 8.3
 -   **Composer**: Version 2.7.1
--   **MySQL**: latest version
+-   **MySQL / MariaDB**: Latest
 -   **Node.js**: Version 18
 -   **NPM**: Version 9.2
 
@@ -21,7 +21,7 @@
 1. Clone the repository:
 
     ```bash
-    git clone
+    git clone https://github.com/madyardwn/simple-app.git
     ```
 
 2. Install dependencies:
@@ -29,6 +29,8 @@
     ```bash
     composer install
     npm install
+    npm run dev # watch
+    npm run build # build
     ```
 
 3. Create a new `.env` file:
@@ -57,7 +59,7 @@
 6. Run database migrations:
 
     ```bash
-    php artisan migrate
+    php artisan migrate:fresh --seed
     ```
 
 7. Create a symbolic link for the storage directory:
@@ -77,7 +79,7 @@
 1. Clone the repository:
 
     ```bash
-    git clone
+    git clone https://github.com/madyardwn/simple-app.git
     ```
 
 2. Build the Docker image:
@@ -97,6 +99,7 @@
     ```bash
     docker compose exec app composer install
     docker compose exec app npm install
+    docker compose exec app npm run build
     ```
 
 5. Create a new `.env` file:
@@ -120,6 +123,12 @@
     DB_DATABASE=your_database
     DB_USERNAME=your_username
     DB_PASSWORD=your_password
+    ```
+
+8. Run database migrations:
+
+    ```bash
+    docker compose exec app php artisan migrate:fresh --seed
     ```
 
 ## Simple Apps Project Overview
