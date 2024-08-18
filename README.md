@@ -6,7 +6,7 @@
 -   **PHP**: Version 8.3
 -   **Composer**: Version 2.7.1
 -   **MySQL / MariaDB**: Latest
--   **Node.js**: Version 18
+-   **Node.js**: Version 20
 -   **NPM**: Version 9.2
 
 ### Optional
@@ -56,16 +56,20 @@
     DB_PASSWORD=your_password
     ```
 
-6. Run database migrations:
-
-    ```bash
-    php artisan migrate:fresh --seed
-    ```
-
-7. Create a symbolic link for the storage directory:
+6. Create a symbolic link for the storage directory:
 
     ```bash
     php artisan storage:link
+    ```
+
+7. Run database migrations:
+
+    ```bash
+    mkdir -p storage/app/public/logos # dir for image from faker
+    ```
+
+    ```bash
+    php artisan migrate:fresh --seed
     ```
 
 8. Start the Laravel development server:
@@ -82,39 +86,13 @@
     git clone https://github.com/madyardwn/simple-app.git
     ```
 
-2. Build the Docker image:
+2. Create a new `.env` file:
 
     ```bash
-    docker compose build app
+    cp .env.example .env
     ```
 
-3. Start the Docker containers:
-
-    ```bash
-    docker compose up -d
-    ```
-
-4. Install dependencies:
-
-    ```bash
-    docker compose exec app composer install
-    docker compose exec app npm install
-    docker compose exec app npm run build
-    ```
-
-5. Create a new `.env` file:
-
-    ```bash
-    docker compose exec app cp .env.example .env
-    ```
-
-6. Generate a new application key:
-
-    ```bash
-    docker compose exec app php artisan key:generate
-    ```
-
-7. Update the `.env` file with your database credentials:
+3. Update the `.env` file with your database credentials:
 
     ```bash
     DB_CONNECTION=mysql
@@ -125,11 +103,55 @@
     DB_PASSWORD=your_password
     ```
 
-8. Run database migrations:
+4. Export UID for the Docker container:
+
+    ```bash
+    export UID=$(id -u)
+    ```
+
+5. Build the Docker image:
+
+    ```bash
+    docker compose build app
+    ```
+
+6. Start the Docker containers:
+
+    ```bash
+    docker compose up -d
+    ```
+
+7. Install dependencies:
+
+    ```bash
+    docker compose exec app composer install
+    docker compose exec app npm install
+    docker compose exec app npm run build
+    ```
+
+8. Generate a new application key:
+
+    ```bash
+    docker compose exec app php artisan key:generate
+    ```
+
+9. Create a symbolic link for the storage directory:
+
+    ```bash
+    docker compose exec app php artisan storage:link
+    ```
+
+10. Run database migrations:
+
+    ```bash
+    docker compose exec app mkdir -p storage/app/public/logos # dir for image from faker
+    ```
 
     ```bash
     docker compose exec app php artisan migrate:fresh --seed
     ```
+
+11. Access the application at `http://localhost:8000`.
 
 ## Simple Apps Project Overview
 

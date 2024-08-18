@@ -1,4 +1,4 @@
-FROM node:latest AS node
+FROM node:20 AS node
 FROM php:8.2-fpm
 
 ARG user
@@ -13,7 +13,9 @@ RUN apt update && apt install -y \
     curl \
     libpng-dev \
     libonig-dev \
-    libxml2-dev
+    libxml2-dev \
+    zip \
+    unzip
 
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 

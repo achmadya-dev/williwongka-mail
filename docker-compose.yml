@@ -32,7 +32,7 @@ services:
             - simple-app-net
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: polbanrisk-phpmyadmin
+        container_name: simple-app-phpmyadmin
         restart: unless-stopped
         environment:
             PMA_HOST: db
