@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
         Employee::factory(50)->create();
 
         User::factory()->create([
-            'name' => 'Folkatech Admin',
-            'email' => 'admin@folkatech.com',
+            'name' => 'cuih',
+            'email' => 'admin@cuih.com',
         ]);
     }
 }
