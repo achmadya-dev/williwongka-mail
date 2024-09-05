@@ -14,8 +14,6 @@
 -   **Docker**: Version 27.1.1
 -   **Mailtrap**: For email testing
 
-    ![Mailtrap](https://folkatech.madyardwn.pro/images/mailtrap.png)
-
 ## Installation
 
 1. Clone the repository:
